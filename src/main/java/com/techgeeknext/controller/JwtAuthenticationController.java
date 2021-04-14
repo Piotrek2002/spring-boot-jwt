@@ -83,7 +83,7 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(userDetailsService.updatePassword(password, userRepository.findByUsername(customUser.getUsername())));
     }
 
-    @RequestMapping(value = "/sendEmail/UserName", method = RequestMethod.GET)
+    @RequestMapping(value = "/sendEmail/{userName}", method = RequestMethod.GET)
     public ResponseEntity<?> sendEmail(@PathVariable String userName, @AuthenticationPrincipal UserDetails customUser) {
         String password = userDetailsService.generatePassword();
         userDetailsService.updatePassword(password, userRepository.findByUsername(customUser.getUsername()));
