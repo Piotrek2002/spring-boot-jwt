@@ -69,17 +69,20 @@ public class JwtUserDetailsService implements UserDetailsService {
 		newUser.setSecretData3(user.getSecretData3());
 		newUser.setSecretData4(user.getSecretData4());
 		newUser.setUserIP(user.getUserIP());
+		List<MessageDao> messageSent=new ArrayList<>();
+		List<MessageDao> messageReceived=new ArrayList<>();
+		newUser.setMessagesSent(messageSent);
+		newUser.setMessagesReceived(messageReceived);
+		userDao.save(newUser);
+
 		GroupDao groupDao=new GroupDao();
 		groupDao.setName(user.getGroupName());
 		groupDao.setGroupDescription(user.getGroupDescription());
 		groupDao.setAdministrator(newUser);
 		groupRepository.save(groupDao);
-		newUser.setAdministratedGroup(groupDao);
-		List<MessageDao> messageSent=new ArrayList<>();
-		List<MessageDao> messageReceived=new ArrayList<>();
-		newUser.setMessagesSent(messageSent);
-		newUser.setMessagesReceived(messageReceived);
-		return userDao.save(newUser);
+
+
+		return newUser;
 	}
 	public UserDao update(UserDto user){
 		UserDao newUser=userDao.findByUsername(user.getUsername());

@@ -41,6 +41,7 @@ public class JwtAuthenticationController {
         this.mailService = mailService;
     }
 
+    //Zwraca token
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
@@ -53,6 +54,7 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
+    // rejestracja
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
         return ResponseEntity.ok(userDetailsService.save(user));
@@ -68,6 +70,7 @@ public class JwtAuthenticationController {
         }
     }
 
+    //Aktualizuje użytkownika za wyjątkiem hasła
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetails customUser) {
         if (customUser.getUsername().equals(userDto.getUsername())) {
@@ -78,16 +81,18 @@ public class JwtAuthenticationController {
 
     }
 
+    //Aktualizcja hasła
     @RequestMapping(value = "/updatePassword/{password}", method = RequestMethod.POST)
     public ResponseEntity<?> updatePassword(@PathVariable String password, @AuthenticationPrincipal UserDetails customUser) {
         return ResponseEntity.ok(userDetailsService.updatePassword(password, userRepository.findByUsername(customUser.getUsername())));
     }
 
+    //wysyła email z nowym hasłem
     @RequestMapping(value = "/sendEmail/{userName}", method = RequestMethod.GET)
     public ResponseEntity<?> sendEmail(@PathVariable String userName, @AuthenticationPrincipal UserDetails customUser) {
         String password = userDetailsService.generatePassword();
         userDetailsService.updatePassword(password, userRepository.findByUsername(customUser.getUsername()));
-        mailService.sendSimpleEmail(userRepository.findByUsername(userName).getEmail(), "New password", password);
+        mailService.sendSimpleEmail(userRepository.findByUsername(userName).getEmail(), "New password","Oto nowe hasło: "+ password);
         return ResponseEntity.ok("E-mail sent!");
     }
 }

@@ -33,6 +33,7 @@ public class MessageController {
     }
 
 
+    //Wysyła wiadomość do użytkownika
     @RequestMapping(value = "/addMessageToUser/{administrator}", method = RequestMethod.POST)
     public ResponseEntity<?> addMessageToUser(@PathVariable String administrator , @RequestBody MessageDto messageDto, @AuthenticationPrincipal UserDetails customUser){
         UserDao userDao=userRepository.findByUsername(administrator);
@@ -45,6 +46,7 @@ public class MessageController {
         }
 
     }
+    //zwraca listę otrzymanych wiadomości
     @RequestMapping(value = "/messageReceivedList", method = RequestMethod.GET)
     public ResponseEntity<?> MessageReceivedList( @AuthenticationPrincipal UserDetails customUser){
 
@@ -63,6 +65,7 @@ public class MessageController {
         }
         return ResponseEntity.ok(messageDtoList);
     }
+    //Zwraca listę wysłanych wiadomości
     @RequestMapping(value = "/messageSentList", method = RequestMethod.GET)
     public ResponseEntity<?> MessageSentList( @AuthenticationPrincipal UserDetails customUser){
 

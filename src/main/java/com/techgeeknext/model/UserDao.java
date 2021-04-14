@@ -2,6 +2,7 @@ package com.techgeeknext.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class UserDao {
 
     @OneToOne(mappedBy = "administrator", cascade = CascadeType.REMOVE)
     private GroupDao administratedGroup;
-
+   // @NotNull jeżeli chcemy ustawić pole jako obowiązkowe
     private String MacAddress;
     private String UserIP;
     private String ActualData;

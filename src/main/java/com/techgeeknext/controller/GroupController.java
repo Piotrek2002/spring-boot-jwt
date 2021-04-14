@@ -27,6 +27,7 @@ public class GroupController {
         this.userRepository = userRepository;
     }
 
+    //Dodaje użytkownika do grupy
     @RequestMapping(value = "/addUserOfGroup/{userName}", method = RequestMethod.POST)
     public ResponseEntity<?> addUserOffGroup(@PathVariable String userName , @AuthenticationPrincipal UserDetails customUser){
         if (customUser.getUsername().equals(userName)){
@@ -36,6 +37,7 @@ public class GroupController {
         }
 
     }
+    //Usuwa użytkownika z grupy
     @RequestMapping(value = "/removeUserOfGroup/{userName}", method = RequestMethod.POST)
     public ResponseEntity<?> removeUserOffGroup(@PathVariable String userName , @AuthenticationPrincipal UserDetails customUser){
         if (customUser.getUsername().equals(userName)){
@@ -45,6 +47,7 @@ public class GroupController {
         }
 
     }
+    //Zwraca listę użytkowników grupy, której jesteś administratorem
     @RequestMapping(value = "/usersOfGroup", method = RequestMethod.GET)
     public ResponseEntity<?> usersOffGroup(@AuthenticationPrincipal UserDetails customUser){
         Set<UserDto> usersOfGroup=groupService.UsersOfGroup(customUser.getUsername());
@@ -52,6 +55,7 @@ public class GroupController {
 
 
     }
+    //Zwraca własne dane
     @RequestMapping(value = "/userData", method = RequestMethod.GET)
     public ResponseEntity<?> userData(@AuthenticationPrincipal UserDetails customUser){
 
