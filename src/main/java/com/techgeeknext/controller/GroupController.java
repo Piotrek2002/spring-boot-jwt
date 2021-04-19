@@ -61,6 +61,7 @@ public class GroupController {
 
         UserDto userDto=new UserDto();
         UserDao userDao=userRepository.findByUsername(customUser.getUsername());
+        userDto.setId(userDao.getId());
         userDto.setUsername(userDao.getUsername());
         userDto.setDescription(userDao.getDescription());
         userDto.setEmail(userDao.getDescription());

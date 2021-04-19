@@ -61,6 +61,7 @@ public class MessageController {
             messageDto.setMessageTitle(messageDao.getMessageTitle());
             messageDto.setRecipient(messageDao.getRecipient().getUsername());
             messageDto.setSender(messageDao.getSender().getUsername());
+            messageDto.setId(messageDao.getId());
             messageDtoList.add(messageDto);
         }
         return ResponseEntity.ok(messageDtoList);
@@ -80,6 +81,7 @@ public class MessageController {
             messageDto.setMessageTitle(messageDao.getMessageTitle());
             messageDto.setRecipient(messageDao.getRecipient().getUsername());
             messageDto.setSender(messageDao.getSender().getUsername());
+            messageDto.setId(messageDao.getId());
             messageDtoList.add(messageDto);
         }
         return ResponseEntity.ok(messageDtoList);

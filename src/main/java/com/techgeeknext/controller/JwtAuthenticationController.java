@@ -3,6 +3,7 @@ package com.techgeeknext.controller;
 import com.techgeeknext.config.JwtTokenUtil;
 import com.techgeeknext.model.JwtRequest;
 import com.techgeeknext.model.JwtResponse;
+import com.techgeeknext.model.UserDao;
 import com.techgeeknext.model.UserDto;
 import com.techgeeknext.repository.UserRepository;
 import com.techgeeknext.service.JwtUserDetailsService;
@@ -72,9 +73,28 @@ public class JwtAuthenticationController {
 
     //Aktualizuje użytkownika za wyjątkiem hasła
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, @AuthenticationPrincipal UserDetails customUser) {
-        if (customUser.getUsername().equals(userDto.getUsername())) {
-            return ResponseEntity.ok(userDetailsService.update(userDto));
+    public ResponseEntity<?> updateUser(@RequestBody UserDto user, @AuthenticationPrincipal UserDetails customUser) {
+        if (customUser.getUsername().equals(user.getUsername())) {
+
+            UserDto userDto=new UserDto();
+            UserDao userDao=userDetailsService.update(user);
+            userDto.setId(userDao.getId());
+            userDto.setUsername(userDao.getUsername());
+            userDto.setDescription(userDao.getDescription());
+            userDto.setEmail(userDao.getDescription());
+            userDto.setActualData(String.valueOf(userDao.getActualData()));
+            userDto.setDataOfStart(String.valueOf(userDao.getDataOfStart()));
+            userDto.setDataOfUpdate(String.valueOf(userDao.getDataOfUpdate()));
+            userDto.setMacAddress(userDao.getMacAddress());
+            userDto.setGroupDescription(userDao.getAdministratedGroup().getGroupDescription());
+            userDto.setGroupName(userDao.getAdministratedGroup().getName());
+            userDto.setModes(userDao.getModes());
+            userDto.setPosition(userDao.getPosition());
+            userDto.setSecretData1(userDao.getSecretData1());
+            userDto.setSecretData2(userDao.getSecretData2());
+            userDto.setSecretData3(userDao.getSecretData3());
+            userDto.setSecretData4(userDao.getSecretData4());
+            return ResponseEntity.ok(userDto);
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
@@ -84,7 +104,9 @@ public class JwtAuthenticationController {
     //Aktualizcja hasła
     @RequestMapping(value = "/updatePassword/{password}", method = RequestMethod.POST)
     public ResponseEntity<?> updatePassword(@PathVariable String password, @AuthenticationPrincipal UserDetails customUser) {
-        return ResponseEntity.ok(userDetailsService.updatePassword(password, userRepository.findByUsername(customUser.getUsername())));
+        UserDao userDao=userDetailsService.updatePassword(password, userRepository.findByUsername(customUser.getUsername()));
+
+        return ResponseEntity.ok(userDao.getUsername());
     }
 
     //wysyła email z nowym hasłem

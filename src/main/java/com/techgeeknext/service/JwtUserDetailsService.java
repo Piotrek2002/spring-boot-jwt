@@ -104,7 +104,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 	public UserDao updatePassword(String password, UserDao user){
 		user.setPassword(bcryptEncoder.encode(password));
 		return userDao.save(user);
-
 	}
 	public String generatePassword() {
 		String upperCaseLetters = RandomStringUtils.random(2, 65, 90, true, true);
