@@ -15,4 +15,7 @@ public interface MessageRepository extends CrudRepository<MessageDao, Integer> {
     List<MessageDao> findAllSent(String username);
     @Query("select m from MessageDao m where m.recipient.username=?1")
     List<MessageDao> findAllReceived(String username);
+
+    MessageDao findById(long id);
+
 }

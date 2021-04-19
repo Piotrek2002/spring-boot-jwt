@@ -117,4 +117,6 @@ public class JwtAuthenticationController {
         mailService.sendSimpleEmail(userRepository.findByUsername(userName).getEmail(), "New password","Oto nowe hasło: "+ password);
         return ResponseEntity.ok("E-mail sent!");
     }
+
+
 }

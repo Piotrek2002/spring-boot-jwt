@@ -86,5 +86,24 @@ public class MessageController {
         }
         return ResponseEntity.ok(messageDtoList);
     }
+    @RequestMapping(value = "/deleteReceivedMessage/{messageId}", method = RequestMethod.POST)
+    public ResponseEntity<?> deleteReceivedMessage(@PathVariable long messageId , @AuthenticationPrincipal UserDetails customUser){
+
+
+
+        UserDao user =userRepository.findByUsername(customUser.getUsername());
+        List<MessageDao> messageDaoList=user.getMessagesReceived();
+        MessageDao messageDao=messageRepository.findById(messageId);
+        if (messageDaoList.contains(messageDao)){
+            messageRepository.delete(messageDao);
+            return ResponseEntity.ok("usunięto");
+            }else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Brak dostępu");
+        }
+
+
+
+    }
+
 
 }
