@@ -30,21 +30,21 @@ public class GroupController {
     //Dodaje użytkownika do grupy
     @RequestMapping(value = "/addUserOfGroup/{userName}", method = RequestMethod.POST)
     public ResponseEntity<?> addUserOffGroup(@PathVariable String userName , @AuthenticationPrincipal UserDetails customUser){
-        if (customUser.getUsername().equals(userName)){
+
             return ResponseEntity.ok(groupService.addUserOfGroup(userName,customUser.getUsername()));
-        }else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Brak dostępu");
-        }
+
+
+
 
     }
     //Usuwa użytkownika z grupy
     @RequestMapping(value = "/removeUserOfGroup/{userName}", method = RequestMethod.POST)
     public ResponseEntity<?> removeUserOffGroup(@PathVariable String userName , @AuthenticationPrincipal UserDetails customUser){
-        if (customUser.getUsername().equals(userName)){
+
             return ResponseEntity.ok(groupService.deleteUserOfGroup(userName,customUser.getUsername()));
-        }else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Brak dostępu");
-        }
+
+
+
 
     }
     //Zwraca listę użytkowników grupy, której jesteś administratorem

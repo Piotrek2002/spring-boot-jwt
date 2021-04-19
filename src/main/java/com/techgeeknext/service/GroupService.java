@@ -1,6 +1,7 @@
 package com.techgeeknext.service;
 
 import com.techgeeknext.model.GroupDao;
+import com.techgeeknext.model.GroupDto;
 import com.techgeeknext.model.UserDao;
 import com.techgeeknext.model.UserDto;
 import com.techgeeknext.repository.GroupRepository;
@@ -23,23 +24,35 @@ public class GroupService {
         this.userRepository = userRepository;
     }
 
-    public GroupDao addUserOfGroup(String userName, String administrator) {
-        GroupDao groupDao = new GroupDao();
+    public GroupDto addUserOfGroup(String userName, String administrator) {
+        GroupDto groupDto = new GroupDto();
         UserDao user=userRepository.findByUsername(administrator);
         UserDao userToAdd=userRepository.findByUsername(userName);
         Set<UserDao> users=user.getAdministratedGroup().getUsersOfGroup();
         users.add(userToAdd);
+        GroupDao groupDao=user.getAdministratedGroup();
+        groupDao.setUsersOfGroup(users);
         groupRepository.save(groupDao);
-        return groupDao;
+        groupDto.setAdministratorName(user.getUsername());
+        groupDto.setGroupDescription(user.getAdministratedGroup().getGroupDescription());
+        groupDto.setName(user.getAdministratedGroup().getName());
+        groupDto.setId(user.getAdministratedGroup().getId());
+        return groupDto;
     }
-    public GroupDao deleteUserOfGroup(String userName, String administrator) {
-        GroupDao groupDao = new GroupDao();
+    public GroupDto deleteUserOfGroup(String userName, String administrator) {
+        GroupDto groupDto = new GroupDto();
         UserDao user=userRepository.findByUsername(administrator);
         UserDao userToRemove=userRepository.findByUsername(userName);
         Set<UserDao> users=user.getAdministratedGroup().getUsersOfGroup();
         users.remove(userToRemove);
+        GroupDao groupDao=user.getAdministratedGroup();
+        groupDao.setUsersOfGroup(users);
         groupRepository.save(groupDao);
-        return groupDao;
+        groupDto.setAdministratorName(user.getUsername());
+        groupDto.setGroupDescription(user.getAdministratedGroup().getGroupDescription());
+        groupDto.setName(user.getAdministratedGroup().getName());
+        groupDto.setId(user.getAdministratedGroup().getId());
+        return groupDto;
     }
     public Set<UserDto> UsersOfGroup(String administrator){
         Set<UserDao> userDaoList=userRepository.findByUsername(administrator).getAdministratedGroup().getUsersOfGroup();
