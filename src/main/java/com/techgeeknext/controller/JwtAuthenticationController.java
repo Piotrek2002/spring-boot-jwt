@@ -77,11 +77,12 @@ public class JwtAuthenticationController {
         if (customUser.getUsername().equals(user.getUsername())) {
 
             UserDto userDto=new UserDto();
-            UserDao userDao=userDetailsService.update(user);
+            userDetailsService.update(user);
+            UserDao userDao=userRepository.findByUsername(user.getUsername());
             userDto.setId(userDao.getId());
             userDto.setUsername(userDao.getUsername());
             userDto.setDescription(userDao.getDescription());
-            userDto.setEmail(userDao.getDescription());
+            userDto.setEmail(userDao.getEmail());
             userDto.setActualData(String.valueOf(userDao.getActualData()));
             userDto.setDataOfStart(String.valueOf(userDao.getDataOfStart()));
             userDto.setDataOfUpdate(String.valueOf(userDao.getDataOfUpdate()));
