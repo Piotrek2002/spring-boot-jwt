@@ -92,7 +92,7 @@ public class MessageController {
 
 
         UserDao user =userRepository.findByUsername(customUser.getUsername());
-        List<MessageDao> messageDaoList=user.getMessagesReceived();
+        List<MessageDao> messageDaoList=user.getMessagesSent();
         MessageDao messageDao=messageRepository.findById(messageId);
         if (messageDaoList.contains(messageDao)){
             messageRepository.delete(messageDao);

@@ -61,6 +61,7 @@ public class GroupService {
         while(it.hasNext()){
             UserDto userDto=new UserDto();
             UserDao userDao=it.next();
+            userDto.setId(userDao.getId());
             userDto.setUsername(userDao.getUsername());
             userDto.setDescription(userDao.getDescription());
             userDto.setEmail(userDao.getDescription());
@@ -80,4 +81,5 @@ public class GroupService {
         }
         return userDtoSet;
     }
+
 }

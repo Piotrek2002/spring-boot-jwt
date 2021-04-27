@@ -64,7 +64,7 @@ public class GroupController {
         userDto.setId(userDao.getId());
         userDto.setUsername(userDao.getUsername());
         userDto.setDescription(userDao.getDescription());
-        userDto.setEmail(userDao.getDescription());
+        userDto.setEmail(userDao.getEmail());
         userDto.setActualData(String.valueOf(userDao.getActualData()));
         userDto.setDataOfStart(String.valueOf(userDao.getDataOfStart()));
         userDto.setDataOfUpdate(String.valueOf(userDao.getDataOfUpdate()));
